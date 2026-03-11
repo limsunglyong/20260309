@@ -2,22 +2,22 @@
 
 class Program 
 {
-    /*
+
     public static void Main(string[] args) 
     {
         Console.WriteLine("Hello, World!");
 
-        int[] src = {1, 2, 3, 4, -10};
-        int[] dest = new int[src.Length];
-
-        CopyArray<int>(src, dest);
+        int[] src = {1, 2, 3, 4, -10, -31};
+        int[] dest = new int[src.Length - 2];
 
         //12. 예외처리하기
         try
         {
-            for (int i = 0; i < dest.Length + 1; i++)
+            CopyArray<int>(src, dest);
+
+            foreach (int i in dest)
             {
-                Console.WriteLine(dest[i]);
+                Console.WriteLine($"Dest = {i}");
             }
         }
         //catch (IndexOutOfRangeException e)
@@ -25,27 +25,21 @@ class Program
         {
             Console.WriteLine("배열의 범위를 벗어났습니다.\r\n{0}\r\n", e.Message);
         }
-        //finally
-        //{
-        //    Console.WriteLine("예외처리 완료");
 
-            // Open 된 자원을 close 필요.
-        //}
-
-        Console.WriteLine("프로그램 정상 종료");
     }
 
-    // generic method
-    public static void CopyArray<T> (T[] source, T[] target)
+    // Span<T> = 메모리주소(Pointer) + 길이(Length) 를 가지고 있는 구조체
+    public static void CopyArray<T> (ReadOnlySpan<T> source, Span<T> target)
     {
-        for (int i = 0; i < source.Length; i++)
+        if(!source.TryCopyTo(target))
         {
-            target[i] = source[i];
+            source.Slice(0, target.Length).CopyTo(target);
         }
     }
-    */
+}
 
-    public static int Main(string[] args)
+
+    /*public static int Main(string[] args)
     {
         try
         {
@@ -98,3 +92,4 @@ class FilterableException : Exception
         ErrorCode = errorCode;
     }
 }
+*/
